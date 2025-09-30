@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>esercizio 1</title>
+    <script src="https://unpkg.com/vue@3" defer></script>
+    <script src="./app.js" defer></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .box { padding: 15px; border: 1px solid #ccc; margin-top: 10px; border-radius: 5px; background-color: #f9f9f9; }
+        .text-danger { color: red; }
+        .active { background-color: #d4edda; }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <h1>Lezioni di Vue.js</h1>
+
+        <!-- Esercizio 1: Profilo Utente -->
+        <div class="box">
+            <h2>Profilo Utente</h2>
+            <p>Nome: {{ nome }}</p>
+            <p>Cognome: {{ cognome }}</p>
+            <p>Città: {{ citta }}</p>
+        </div>
+
+        <!-- Esercizio 2: Dettagli Prodotto -->
+        <div class="box">
+            <h2>Dettagli Prodotto</h2>
+            <p>Il prodotto {{ nomeProdotto }} costa {{ prezzoProdotto }} €</p>
+        </div>
+
+        <!-- Esercizio 3: Immagine Prodotto -->
+        <div class="box">
+            <h2>Immagine Prodotto</h2>
+            <img v-if="immagine" src="laptop.jpg" alt="Laptop" width="300">
+            <button @click="immagine = !immagine"></button>
+        </div>
+
+
+        <!-- Esercizio 4: Tooltip Dinamico -->
+        <div class="box">
+            <h2>Tooltip Dinamico</h2>
+            <p :title="messaggioTooltip">
+                Passa con il mouse qui sopra per vedere il tooltip
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>
