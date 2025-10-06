@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vue semplice: Login, Semaforo, Classifica, Prodotti</title>
+  <style>
+    .rosso { background: red; color: white; padding: 10px; margin-top: 10px; }
+    .giallo { background: yellow; color: black; padding: 10px; margin-top: 10px; }
+    .verde { background: green; color: white; padding: 10px; margin-top: 10px; }
+    table {
+      border-collapse: collapse; 
+      width: 50%; 
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #333; 
+      padding: 6px;
+      text-align: left;
+    }
+    th {
+      background: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- LOGIN -->
+    <h2>Login</h2>
+    <input v-model="nome" placeholder="Scrivi il tuo nome" />
+    <button @click="faiLogin">Accedi</button>
+    <p v-if="isLoggedIn">Benvenuto, {{ nome }}!</p>
+    <p v-else>Per favore, accedi.</p>
+
+    <!-- SEMAFORO -->
+    <h2>Semaforo</h2>
+    <select v-model="colore">
+      <option disabled value="">Scegli un colore</option>
+      <option>rosso</option>
+      <option>giallo</option>
+      <option>verde</option>
+    </select>
+
+    <div v-if="colore === 'rosso'" class="rosso">Stop</div>
+    <div v-else-if="colore === 'giallo'" class="giallo">Attenzione</div>
+    <div v-else-if="colore === 'verde'" class="verde">Vai!</div>
+
+    <!-- CLASSIFICA -->
+    <h2>Classifica Team Sportivi</h2>
+    <ol>
+      <li v-for="(team, i) in teamSportivi" :key="i">{{ team }}</li>
+    </ol>
+
+    <!-- CATALOGO PRODOTTI -->
+    <h2>Catalogo Prodotti</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Prezzo (€)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="prodotto in prodotti" :key="prodotto.id">
+          <td>{{ prodotto.id }}</td>
+          <td>{{ prodotto.nome }}</td>
+          <td>{{ prodotto.prezzo.toFixed(2) }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <script src="https://unpkg.com/vue@3"></script>
+  <script>
+    const { createApp } = Vue;
+    createApp({
+      data() {
+        return {
+          nome: '',
+          isLoggedIn: false,
+          colore: '',
+          teamSportivi: ['Juventus', 'Milan', 'Inter'],
+          prodotti: [
+            { id: 1, nome: 'Maglietta', prezzo: 19.99 },
+            { id: 2, nome: 'Pantaloni', prezzo: 39.50 },
+            { id: 3, nome: 'Scarpe', prezzo: 59.00 }
+          ]
+        }
+      },
+      methods: {
+        faiLogin() {
+          this.isLoggedIn = this.nome.trim().toLowerCase() === 'matteo';
+          if (!this.isLoggedIn) alert('Nome sbagliato!');
+        }
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+</html>
