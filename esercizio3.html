@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Esercizi Vue.js</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h2 { margin-top: 30px; }
+    .spento { color: gray; }
+    .acceso { color: green; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <!-- 1) Cambia Messaggio -->
+  <h2>1) Cambia Messaggio</h2>
+  <p>{{ messaggio }}</p>
+  <button @click="cambiaMessaggio">Clicca qui</button>
+
+  <!-- 2) Accendi / Spegni -->
+  <h2>2) Accendi / Spegni</h2>
+  <button @click="toggleLuce">Toggle Luce</button>
+  <p :class="luceAccesa ? 'acceso' : 'spento'">
+    La luce è {{ luceAccesa ? 'accesa' : 'spenta' }}.
+  </p>
+
+  <!-- 3) Convertitore kg -> grammi -->
+  <h2>3) Convertitore di Unità Semplice</h2>
+  <label>
+    Inserisci valore in kg:
+    <input type="number" v-model.number="pesoKg">
+  </label>
+  <p>{{ pesoKg }} kg = {{ pesoGrammi }} grammi</p>
+
+  <!-- 4) Form di Registrazione -->
+  <h2>4) Form di Registrazione Semplice</h2>
+  <form @submit.prevent>
+    <!-- Nome -->
+    <label>
+      Nome:
+      <input type="text" v-model="nome">
+    </label>
+    <br><br>
+
+    <!-- Genere -->
+    <span>Genere:</span><br>
+    <label><input type="radio" value="Uomo" v-model="genere"> Uomo</label>
+    <label><input type="radio" value="Donna" v-model="genere"> Donna</label>
+    <label><input type="radio" value="Altro" v-model="genere"> Altro</label>
+    <br><br>
+
+    <!-- Paese -->
+    <label for="paese">Paese:</label>
+    <select v-
