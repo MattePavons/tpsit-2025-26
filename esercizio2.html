@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Esercizi JS Base</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .rosso { color: red; font-weight: bold; }
+        .giallo { color: orange; font-weight: bold; }
+        .verde { color: green; font-weight: bold; }
+        table {
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 6px 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1) Login Utente -->
+    <h2>1) Login Utente</h2>
+    <div id="loginMessage"></div>
+
+    <!-- 2) Semaforo -->
+    <h2>2) Semaforo</h2>
+    <div id="semaforoMessage"></div>
+
+    <!-- 3) Classifica -->
+    <h2>3) Classifica Team Preferiti</h2>
+    <ol id="classifica"></ol>
+
+    <!-- 4) Catalogo Prodotti -->
+    <h2>4) Catalogo Prodotti</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Prezzo (€)</th>
+            </tr>
+        </thead>
+        <tbody id="tabellaProdotti"></tbody>
+    </table>
+
+    <script>
+        // 1) Login Utente
+        const isLoggedIn = true; // cambia in false per testare
+        const loginDiv = document.getElementById('loginMessage');
+        if (isLoggedIn) {
+            loginDiv.textContent = "Benvenuto, Utente!";
+        } else {
+            loginDiv.textContent = "Per favore, accedi.";
+        }
+
+        // 2) Semaforo
+        const coloreSemaforo = 'verde'; // 'rosso', 'giallo' o 'verde'
+        const semaforoDiv = document.getElementById('semaforoMessage');
+
+        if (coloreSemaforo === 'rosso') {
+            semaforoDiv.textContent = "Stop";
+            semaforoDiv.classList.add('rosso');
+        } else if (coloreSemaforo === 'giallo') {
+            semaforoDiv.textContent = "Attenzione";
+            semaforoDiv.classList.add('giallo');
+        } else if (coloreSemaforo === 'verde') {
+            semaforoDiv.textContent = "Vai!";
+            semaforoDiv.classList.add('verde');
+        }
+
+        // 3) Classifica
+        const teamPreferiti = ['Milan', 'Juventus', 'Inter'];
+        const classificaOl = document.getElementById('classifica');
+        teamPreferiti.forEach(team => {
+            const li = document.createElement('li');
+            li.textContent = team;
+            classificaOl.appendChild(li);
+        });
+
+        // 4) Catalogo Prodotti
+        const prodotti = [
+            { id: 1, nome: 'Laptop', prezzo: 899.99 },
+            { id: 2, nome: 'Smartphone', prezzo: 499.90 },
+            { id: 3, nome: 'Cuffie', prezzo: 59.90 }
+        ];
+        const tabellaBody = document.getElementById('tabellaProdotti');
+
+        prodotti.forEach(prodotto => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${prodotto.id}</td>
+                <td>${prodotto.nome}</td>
+                <td>${prodotto.prezzo.toFixed(2)}</td>
+            `;
+            tabellaBody.appendChild(tr);
+        });
+    </script>
+
+</body>
+</html>
