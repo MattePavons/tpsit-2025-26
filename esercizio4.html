@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Esercizio Vue.js - 4 Sezioni</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      line-height: 1.6;
+    }
+    section {
+      margin-bottom: 25px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    h2 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 6px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    p {
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <section>
+      <h2>Controllo Maggiore Età</h2>
+      <label>Inserisci la tua età:</label>
+      <input type="number" v-model.number="eta" />
+      <p>Messaggio: <strong>{{ messaggioEta }}</strong></p>
+    </section>
+
+    <section>
+      <h2>Carrello Semplice</h2>
+      <ul>
+        <li v-for="(prodotto, index) in carrello" :key="index">
+          {{ prodotto.nome }} - {{ prodotto.prezzo }}€
+        </li>
+      </ul>
+      <p><strong>Totale carrello:</strong> {{ totaleCarrello }}€</p>
+    </section>
+
+    <section>
+      <h2>Validazione Input</h2>
+      <label>Username:</label>
+      <input type="text" v-model="username" />
+      <p v-if="erroreUsername" style="color: red;">{{ erroreUsername }}</p>
+    </section>
+
+    <section>
+      <h2>Salvataggio Automatico</h2>
+      <textarea v-model="testo" rows="4"></textarea>
+      <p>{{ statoSalvataggio }}</p>
+    </section>
+  </div>
+
+  <script>
+    const { createApp, ref, computed, watch } = Vue
+
+    createApp({
+      setup() {
+        const eta = ref(0)
+        const messaggioEta = computed(() => eta.value >= 18 ? "Maggiorenne" : "Minorenne")
+
+        const carrello = ref([
+          { nome: "Mela", prezzo: 1.5 },
+          { nome: "Pane", prezzo: 2.0 },
+          { nome: "Latte", prezzo: 1.2 }
+        ])
+        const totaleCarrello = computed(() =>
+          carrello.value.reduce((totale, p) => totale + p.prezzo, 0).toFixed(2)
+        )
+
+        const username = ref("")
+        const erroreUsername = ref("")
+        watch(username, (nuovoValore) => {
+          erroreUsername.value =
+            nuovoValore.length < 5 ? "L'username deve contenere almeno 5 caratteri." : ""
+        })
+
+        const testo = ref("")
+        const statoSalvataggio = ref("")
+        let timer = null
+
+        watch(testo, () => {
+          statoSalvataggio.value = "Sto salvando..."
+          clearTimeout(timer)
+          timer = setTimeout(() => {
+            statoSalvataggio.value = "Salvato!"
+          }, 1000)
+        })
+
+        return {
+          eta,
+          messaggioEta,
+          carrello,
+          totaleCarrello,
+          username,
+          erroreUsername,
+          testo,
+          statoSalvataggio
+        }
+      }
+    }).mount("#app")
+  </script>
+</body>
+</html>
