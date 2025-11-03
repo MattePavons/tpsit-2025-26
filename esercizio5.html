@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esercizio VueJS</title>
+  <!-- CDN di Vue.js 3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <style>
+    /* Stili per il messaggio */
+    .message {
+      color: white;
+      padding: 10px;
+      margin: 10px 0;
+      text-align: center;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .success {
+      background-color: green;
+    }
+
+    .error {
+      background-color: red;
+    }
+
+    /* Avatar */
+    .avatar {
+      display: inline-block;
+      border-radius: 50%;
+      margin-top: 10px;
+    }
+
+    /* Card */
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      width: 200px;
+      margin: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <!-- Stato del Messaggio -->
+    <h2>Stato del Messaggio</h2>
+    <div :class="['message', messageClass]">
+      {{ messageText }}
+    </div>
+    <button @click="setSuccess">Imposta come Successo</button>
+    <button @click="setError">Imposta come Errore</button>
+
+    <hr>
+
+    <!-- Avatar Personalizzabile -->
+    <h2>Avatar Personalizzabile</h2>
+    <label>
+      Larghezza (px):
+      <input type="number" v-model="avatarWidth">
+    </label>
+    <br>
+    <label>
+      Altezza (px):
+      <input type="number" v-model="avatarHeight">
+    </label>
+    <br>
+    <label>
+      Colore di sfondo:
+      <input type="color" v-model="avatarColor">
+    </label>
+    <div class="avatar"
+         :style="{ width: avatarWidth + 'px', height: avatarHeight + 'px', backgroundColor: avatarColor }">
+    </div>
+
+    <hr>
+
+    <!-- Saluto Personale -->
+    <h2>Saluto Personale</h2>
+    <saluto-utente></saluto-utente>
+    <saluto-utente></saluto-utente>
+
+    <hr>
+
+    <!-- Card Semplice -->
+    <h2>Card Semplice</h2>
+    <info-card></info-card>
+    <info-card></info-card>
+  </div>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          // Stato del messaggio
+          messageText: 'Nessun messaggio impostato',
+          messageClass: '',
+
+          // Avatar personalizzabile
+          avatarWidth: 100,
+          avatarHeight: 100,
+          avatarColor: '#00bfff'
+        };
+      },
+      methods: {
+        setSuccess() {
+          this.messageText = 'Operazione avvenuta con successo!';
+          this.messageClass = 'success';
+        },
+        setError() {
+          this.messageText = 'Si è verificato un errore!';
+          this.messageClass = 'error';
+        }
+      }
+    });
+
+    // Componente Saluto
+    app.component('saluto-utente', {
+      template: `<div>Benvenuto nella nostra applicazione!</div>`
+    });
+
+    // Componente Card
+    app.component('info-card', {
+      template: `
+        <div class="card">
+          <h3>Titolo della Card</h3>
+          <p>Contenuto della card...</p>
+        </div>
+      `
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+</html>
